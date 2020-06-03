@@ -1,0 +1,15 @@
+.mx-iile-faq-form small {
+    display: none;
+    color: red;
+}
+.mx_invalid_form small {
+    display: block;
+}
+.mx-form-saved {
+	color: green;
+	font-weight: bold;
+}
+.mx-form-failed {
+	color: red;
+	font-weight: bold;
+}

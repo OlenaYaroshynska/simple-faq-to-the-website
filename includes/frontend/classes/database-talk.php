@@ -64,20 +64,32 @@ class MXFFI_Database_Talk
 					// user email
 					update_post_meta( $post_ID, '_mxffi_user_email', sanitize_email( $_POST['user_email'] ) );
 
-					// $email = get_user_by( 'ID', 1 )->user_email;
+					$email = get_option( '_mx_simple_faq_admin_email' );
 
-					$email = 'test_mail@gmail.com';
+					if( !$email ) {
 
-					$header  = 'From: ИНСТИТУТ МЕЖДУНАРОДНОГО ПРАВА И ЭКОНОМИКИ имени А.С.ГРИБОЕДОВА <support@iile.ru>' . "\r\n";
-					$header .= 'Reply-To: support@iile.ru' . "\r\n";
+						$email = get_user_by( 'ID', 1 )->user_email;
+
+					}
+
+					$websit_name = get_bloginfo( 'name' );
+
+					$websit_domain = get_site_url();
+
+					$websit_domain = str_replace( 'http://', '', $websit_domain );
+
+					$websit_domain = str_replace( 'https://', '', $websit_domain );
+
+					$header  = 'From: ' . $websit_name .' <support@' . $websit_domain . '>' . "\r\n";
+					$header .= 'Reply-To: support@' . $websit_domain . "\r\n";
 
 					$header .= "Content-Type: text/html; charset=UTF-8\r\n";
 
-					$subject = 'У Вас на сайте новый вопрос в разделе "Вопрос / Ответ"';
+					$subject = __( 'You\'ve received the new Question.', 'mxffi-domain' );
 
-					$message = '<p>Пользователь <b>' . $_POST['user_name'] . '</b> задал(а) вопрос на сайте.</p>';
+					$message = '<p>' . __( 'User', 'mxffi-domain' ) . ' <b>' . esc_html( $_POST['user_name'] ) . '</b> ' . __( 'has sent a question.', 'mxffi-domain' ) . '</p>';
 
-					$message .= '<p><b>' . $_POST['message'] . '</b></p>';					
+					$message .= '<p><b>' . esc_html( $_POST['message'] ) . '</b></p>';					
 
 					add_filter( 'wp_mail_content_type', array( 'MXFFI_Database_Talk', 'mx_send_html' ) );
 

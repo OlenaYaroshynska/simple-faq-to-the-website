@@ -153,14 +153,22 @@ class MXFFI_Metabox_Creation
 
 				update_option( '_mx_test_email', 123 );
 
-				$header  = 'From: ИНСТИТУТ МЕЖДУНАРОДНОГО ПРАВА И ЭКОНОМИКИ имени А.С.ГРИБОЕДОВА <support@iile.ru>' . "\r\n";
-				$header .= 'Reply-To: support@iile.ru' . "\r\n";
+				$websit_name = get_bloginfo( 'name' );
+
+				$websit_domain = get_site_url();
+
+				$websit_domain = str_replace( 'http://', '', $websit_domain );
+
+				$websit_domain = str_replace( 'https://', '', $websit_domain );
+
+				$header  = 'From: ' . $websit_name .' <support@' . $websit_domain . '>' . "\r\n";
+				$header .= 'Reply-To: support@' . $websit_domain . "\r\n";
 
 				$header .= "Content-Type: text/html; charset=UTF-8\r\n";
 				
-				$subject = 'Ответ на Ваш вопрос!';
+				$subject = __( 'The answer to your question!', 'mxffi-domain' );
 
-				$_message = '<p>Здавствуйте! Ответ на Ваш вопрос.</p>';
+				$_message = '<p>' . __( 'Hello! The answer to your question.', 'mxffi-domain' ) . '</p>';
 
 				$_message .= '<p>' . $message . '</p>';
 

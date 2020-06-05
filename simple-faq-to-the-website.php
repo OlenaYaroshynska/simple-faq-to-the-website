@@ -3,7 +3,7 @@
 Plugin Name: Simple FAQ To The Website
 Plugin URI: https://github.com/ElenaIar/simple-faq-to-the-website
 Description: This plugin allows you to place the FAQ system to your website.
-Author: olenaiaroshynska
+Author: Olena Iaroshynska
 Version: 1.0
 Author URI: https://github.com/ElenaIar
 */

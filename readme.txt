@@ -30,10 +30,8 @@ Users of your website can send you a question and you can answer.
 
 == Screenshots ==
 
-1. Click the button
-2. Item moved upwards
-3. Click the button again
-4. ...
+1. How does it look like on a website?
+2. How does it look like on a admin panel?
 
 == Changelog ==
 

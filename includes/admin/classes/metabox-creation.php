@@ -28,7 +28,7 @@ class MXFFI_Metabox_Creation
 			// user name
 			add_meta_box(
 				'mxffi_faq_meta_user_name',
-				'Имя пользователя',
+				'User name',
 				array( 'MXFFI_Metabox_Creation', 'mxffi_faq_meta_user_name_callback' ),
 				array( 'mxffi_iile_faq' ),
 				'normal'
@@ -37,7 +37,7 @@ class MXFFI_Metabox_Creation
 			// user email
 			add_meta_box(
 				'mxffi_faq_meta_user_email',
-				'Email пользователя',
+				'Email of the user',
 				array( 'MXFFI_Metabox_Creation', 'mxffi_faq_meta_user_email_callback' ),
 				array( 'mxffi_iile_faq' ),
 				'normal'
@@ -46,7 +46,7 @@ class MXFFI_Metabox_Creation
 			// response
 			add_meta_box(
 				'mxffi_faq_meta_response',
-				'Написать ответ пользователю',
+				'Write an answer',
 				array( 'MXFFI_Metabox_Creation', 'mxffi_faq_meta_response_callback' ),
 				array( 'mxffi_iile_faq' ),
 				'normal'
@@ -166,9 +166,9 @@ class MXFFI_Metabox_Creation
 
 				$header .= "Content-Type: text/html; charset=UTF-8\r\n";
 				
-				$subject = __( 'The answer to your question!', 'mxffi-domain' );
+				$subject = __( 'The answer to your question!', 'simple-faq-to-the-website' );
 
-				$_message = '<p>' . __( 'Hello! The answer to your question.', 'mxffi-domain' ) . '</p>';
+				$_message = '<p>' . __( 'Hello! The answer to your question.', 'simple-faq-to-the-website' ) . '</p>';
 
 				$_message .= '<p>' . $message . '</p>';
 

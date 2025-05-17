@@ -76,8 +76,8 @@ class MXFFI_Admin_Main
 
 		// sub settings menu item
 		MXFFI_Route::mxffi_get( 'MXFFI_Main_Page_Controller', 'settings_menu_item_action', 'NULL', [
-			'menu_title' => __( 'Simple FAQ', 'mxffi-domain' ),
-			'page_title' => __( 'Simple FAQ', 'mxffi-domain' )
+			'menu_title' => 'Simple FAQ',
+			'page_title' => 'Simple FAQ'
 		], 'settings_simple_faq', true );
 
 	}

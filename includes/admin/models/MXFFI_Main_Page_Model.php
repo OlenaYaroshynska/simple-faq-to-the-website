@@ -21,6 +21,8 @@ class MXFFI_Main_Page_Model extends MXFFI_Model
 		// save link
 		add_action( 'wp_ajax_mx_changev_agree_link', array( 'MXFFI_Main_Page_Model', 'mx_changev_agree_link' ), 10, 1 );
 
+		// save site key
+		add_action( 'wp_ajax_mx_changev_site_key', array( 'MXFFI_Main_Page_Model', 'mx_changev_site_key' ), 10, 1 );
 	}
 
 	/*
@@ -79,7 +81,31 @@ class MXFFI_Main_Page_Model extends MXFFI_Model
 
 	}
 
-	
+	/*
+	* save site key
+	*/
+	public static function mx_changev_site_key()
+	{
+		
+		// Checked POST nonce is not empty
+		if( empty( $_POST['nonce'] ) ) wp_die( '0' );
 
+		// Checked or nonce match
+		if( wp_verify_nonce( $_POST['nonce'], 'mxvjfepcdata_nonce_request_admin' ) ){
+
+			$site_key = esc_html( $_POST['site_key'] );
+
+			$saved = update_option( '_mx_simple_faq_recaptcha_site_key', $site_key );
+
+			if( $saved ) {
+				echo 'saved';
+			} else {
+				echo 'failed';
+			}
+		}
+
+		wp_die();
+
+	}
 			
 }

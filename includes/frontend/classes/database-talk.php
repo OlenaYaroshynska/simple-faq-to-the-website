@@ -72,6 +72,8 @@ class MXFFI_Database_Talk
 
 					}
 
+					$user_email = sanitize_email( $_POST['user_email'] );
+
 					$websit_name = get_bloginfo( 'name' );
 
 					$websit_domain = get_site_url();
@@ -85,9 +87,9 @@ class MXFFI_Database_Talk
 
 					$header .= "Content-Type: text/html; charset=UTF-8\r\n";
 
-					$subject = __( 'You\'ve received the new Question.', 'mxffi-domain' );
+					$subject = __( 'You\'ve received the new Question.', 'simple-faq-to-the-website' );
 
-					$message = '<p>' . __( 'User', 'mxffi-domain' ) . ' <b>' . esc_html( $_POST['user_name'] ) . '</b> ' . __( 'has sent a question.', 'mxffi-domain' ) . '</p>';
+					$message = '<p>' . __( 'User', 'simple-faq-to-the-website' ) . ' <b>' . esc_html( $_POST['user_name'] ) . '</b> (' . $user_email . '), ' . __( 'has sent a question.', 'simple-faq-to-the-website' ) . '</p>';
 
 					$message .= '<p><b>' . esc_html( $_POST['message'] ) . '</b></p>';					
 
@@ -120,13 +122,15 @@ class MXFFI_Database_Talk
 
 			if( wp_verify_nonce( $_POST['nonce'], 'mxvjfepcdata_nonce_request_front' ) ) {
 
-				$query = sanitize_text_field( $_POST['query'] );
+				$query = sanitize_text_field( $_POST['query'] ) ?? '';
 
-				$current_page = sanitize_text_field( $_POST['current_page'] );
+				$current_page = sanitize_text_field( $_POST['current_page'] );				
 
 				$current_page = intval( $current_page );
 
 				$faq_per_page = sanitize_text_field( $_POST['faq_per_page'] );
+
+				$faq_per_page = intval( $faq_per_page );
 
 				$current_page = ( $current_page * $faq_per_page ) - $faq_per_page;
 
@@ -136,13 +140,22 @@ class MXFFI_Database_Talk
 
 				$posts_id_results = $wpdb->get_results(
 
-					"SELECT ID, post_title, post_date, post_title, post_content FROM $posts_table
-						WHERE post_type = 'mxffi_iile_faq'
-							AND post_status = 'publish'
-							AND ( post_title LIKE '%$query%'
-								OR post_content LIKE '%$query%' )
-						ORDER BY post_date DESC
-						LIMIT $current_page, $faq_per_page"
+					$wpdb->prepare(
+
+						"SELECT ID, post_title, post_date, post_title, post_content FROM $posts_table
+							WHERE post_type = 'mxffi_iile_faq'
+								AND post_status = 'publish'
+								AND ( post_title LIKE %s
+									OR post_content LIKE %s )
+							ORDER BY post_date DESC
+							LIMIT %d, %d",
+
+						'%' . $query . '%',
+						'%' . $query . '%',
+						$current_page,
+						$faq_per_page
+
+					)
 
 				);
 
@@ -216,6 +229,8 @@ class MXFFI_Database_Talk
 
 				$faq_per_page = sanitize_text_field( $_POST['faq_per_page'] );
 
+				$faq_per_page = intval( $faq_per_page );				
+
 				$current_page = ( $current_page * $faq_per_page ) - $faq_per_page;
 
 				global $wpdb;
@@ -224,14 +239,23 @@ class MXFFI_Database_Talk
 
 				$posts_id_results = $wpdb->get_results(
 
-					"SELECT ID, post_title, post_date, post_title, post_content FROM $posts_table
-						WHERE post_type = 'mxffi_iile_faq'
-							AND post_status = 'publish'
-							AND ( post_title LIKE '%$query%'
-								OR post_content LIKE '%$query%' )
-						ORDER BY post_date DESC
-						LIMIT $current_page, $faq_per_page
-						"
+					$wpdb->prepare(
+
+						"SELECT ID, post_title, post_date, post_title, post_content FROM $posts_table
+							WHERE post_type = 'mxffi_iile_faq'
+								AND post_status = 'publish'
+								AND ( post_title LIKE %s
+									OR post_content LIKE %s )
+							ORDER BY post_date DESC
+							LIMIT %d, %d
+							",
+
+						'%'.$query.'%',
+						'%'.$query.'%',
+						$current_page,
+						$faq_per_page
+
+					)
 
 				);
 

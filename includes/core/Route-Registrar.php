@@ -90,7 +90,7 @@ class MXFFI_Route_Registrar
 	* $settings_area 	- place item to settings area (core WP Settings menu item)
 	*
 	*/
-	public function mxffi_set_data( $controller, $action, $slug = MXFFI_MAIN_MENU_SLUG, array $menu_properties, $sub_menu_slug = false, $settings_area = false )
+	public function mxffi_set_data( $controller, $action, $slug = MXFFI_MAIN_MENU_SLUG, array $menu_properties = [], $sub_menu_slug = false, $settings_area = false )
 	{
 
 		// set controller
@@ -172,8 +172,8 @@ class MXFFI_Route_Registrar
 	public function mxffi_create_admin_main_menu()
 	{
 
-		add_menu_page( __( $this->properties['page_title'], 'mxffi-domain' ),
-			 __( $this->properties['menu_title'], 'mxffi-domain' ),
+		add_menu_page( __( $this->properties['page_title'], 'simple-faq-to-the-website' ),
+			 __( $this->properties['menu_title'], 'simple-faq-to-the-website' ),
 			 $this->properties['capability'],
 			 $this->slug,
 			 array( $this, 'mxffi_view_connector' ),
@@ -190,8 +190,8 @@ class MXFFI_Route_Registrar
 		
 		// create a sub menu
 		add_submenu_page( $this->slug,
-			 __( $this->properties['page_title'], 'mxffi-domain' ),
-			 __( $this->properties['menu_title'], 'mxffi-domain' ),
+			 __( $this->properties['page_title'], 'simple-faq-to-the-website' ),
+			 __( $this->properties['menu_title'], 'simple-faq-to-the-website' ),
 			 $this->properties['capability'],
 			 $this->sub_menu_slug,
 			 array( $this, 'mxffi_view_connector' )
@@ -207,8 +207,8 @@ class MXFFI_Route_Registrar
 		
 		// create a settings menu
 		add_options_page(
-			__( $this->properties['page_title'], 'mxffi-domain' ),
-			__( $this->properties['menu_title'], 'mxffi-domain' ),
+			__( $this->properties['page_title'], 'simple-faq-to-the-website' ),
+			__( $this->properties['menu_title'], 'simple-faq-to-the-website' ),
 			$this->properties['capability'],
 			$this->sub_menu_slug,
 			array( $this, 'mxffi_view_connector' )
@@ -218,7 +218,7 @@ class MXFFI_Route_Registrar
 		public function mxffi_create_settings_link( $links )
 		{
 
-			$settings_link = '<a href="' . get_admin_url() . 'admin.php?page=' . $this->sub_menu_slug . '">' . __( $this->properties['menu_title'], 'mxffi-domain' ) . '</a>'; // options-general.php
+			$settings_link = '<a href="' . get_admin_url() . 'admin.php?page=' . $this->sub_menu_slug . '">' . __( $this->properties['menu_title'], 'simple-faq-to-the-website' ) . '</a>'; // options-general.php
 
 			array_push( $links, $settings_link );
 

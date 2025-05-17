@@ -221,7 +221,109 @@ Vue.component( 'mx_admin_email_form', {
 		}
 	}
 	
-} )
+} );
+
+// form add site key
+Vue.component( 'mx_recaptcha_site_key_form', {
+
+	props: {
+		site_key: {
+			type: String,
+			required: true
+		}
+	},
+	template: `
+		<form
+			@submit.prevent="saveSiteKey"
+			class="mx-iile-faq-form"
+			:class="{mx_invalid_form: formInvalid}"
+		>
+
+			<div class="mx-form-saved"
+				v-if="form_save_success"
+			>
+				${mxvjfepcdata_obj_admin.texts.form_saved}
+			</div>
+
+			<div class="mx-form-failed"
+				v-if="form_failed"
+			>
+				${mxvjfepcdata_obj_admin.texts.form_failed}
+			</div>
+			
+				
+			<div>
+				<input 
+					type="text"
+					v-model="v_site_key"
+				/>
+				<small
+					v-if="!v_site_key"
+					class="mx_email_empty">Enter a recaptcha site key</small>
+			</div>
+
+			<button
+				type="submit"
+				
+			>Save</button>
+
+		</form>
+	`,
+	data() {
+		return {
+			v_site_key: this.site_key,
+			formInvalid: false,
+			form_save_success: null,
+			form_failed: null
+		}
+	},
+	methods: {
+		saveSiteKey() {
+
+			if(
+				this.v_site_key
+			) {
+
+				var _this = this;
+
+				var data = {
+
+					action: 'mx_changev_site_key',
+					nonce: mxvjfepcdata_obj_admin.nonce,
+					site_key: _this.v_site_key
+
+				};
+
+				jQuery.post( mxvjfepcdata_obj_admin.ajax_url, data, function( response ) {
+
+					if( response === 'saved' ) {
+
+						_this.form_save_success = true
+
+						setTimeout( function() {
+
+							_this.form_save_success = null
+
+						}, 5000 )
+
+					} else {
+
+						_this.form_failed = true
+
+						setTimeout( function() {
+
+							_this.form_failed = null
+
+						}, 5000 )
+
+					}
+				} );
+			} else {
+				this.formInvalid = true
+			}
+		}
+	}
+} );
 
 if( document.getElementById( 'mx_admin_app' ) ) {
 
@@ -230,4 +332,3 @@ if( document.getElementById( 'mx_admin_app' ) ) {
 	} )
 
 }
-

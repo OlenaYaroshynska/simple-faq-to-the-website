@@ -36,7 +36,7 @@ class MXFFI_Model
 	/**
 	* select row from the database
 	*/
-	public function mxffi_get_row( $table = NULL, $wher_name, $wher_value )
+	public function mxffi_get_row( $table = NULL, $wher_name = 1, $wher_value = 1 )
 	{
 
 		$table_name = $this->wpdb->prefix . $this->table;

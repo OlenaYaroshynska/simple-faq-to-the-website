@@ -2,8 +2,8 @@
 Contributors: olenaiaroshynska
 Tags: FAQ, question, answer
 Requires at least: 5.0
-Tested up to: 5.4
-Stable tag: 1.0
+Tested up to: 6.8
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,9 @@ Users of your website can send you a question and you can answer.
 2. How does it look like on a admin panel?
 
 == Changelog ==
+
+= 2.0 =
+* Added reCAPTCHA V2.
 
 = 1.0 =
 * Simple FAQ To The Website

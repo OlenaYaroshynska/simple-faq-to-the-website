@@ -1,5 +1,5 @@
 // recaptcha
-// Vue.component( 'vue-recaptcha', VueRecaptcha )
+Vue.component( 'vue-recaptcha', VueRecaptcha )
 
 // search
 Vue.component( 'mx_faq_search', {
@@ -20,12 +20,18 @@ Vue.component( 'mx_faq_search', {
 					v-model="search"
 					@input="mxSearch"
 				/>
-				<button @click.prevent="mxSearch" class="mx-faq-button">${mxvjfepcdata_obj_front.texts.search}</button>
-			</div>
+				<button @click.prevent="mxSearchClick" class="mx-faq-button">${mxvjfepcdata_obj_front.texts.search}</button>
+			
+				<div class="mx-make-question">
+					<a 
+						v-if="!pageloading"
+						href="#mx-iile-question-form"
+						class="mx-faq-button"
+						@click.prevent="scrollToAskQuestion"
+					>${mxvjfepcdata_obj_front.texts.make_question}</a>
+				</div>
 
-			<div class="mx-make-question">
-				<a v-if="!pageloading" href="#mx-iile-question-form" class="mx-faq-button">${mxvjfepcdata_obj_front.texts.make_question}</a>
-			</div> 
+			</div>			 
 		</div>
 	`,
 	data() {
@@ -35,6 +41,32 @@ Vue.component( 'mx_faq_search', {
 		}
 	},
 	methods: {
+		scrollToAskQuestion() {
+
+			jQuery( 'body,html' ).animate({
+				scrollTop: jQuery( '#mx-iile-question-form' ).offset().top-130
+			}, 800);
+
+		},
+		mxSearchClick() {
+
+			var _this = this
+
+			clearTimeout( _this.timeout )
+
+			let search_query = this.search
+
+			if( search_query ) {
+
+				_this.timeout = setTimeout( function() {
+
+					_this.$emit( 'mx-search-request', search_query )
+
+				}, 500 )
+
+			}
+
+		},
 		mxSearch() {
 
 			var _this = this
@@ -82,6 +114,9 @@ Vue.component( 'mx_faq_item', {
 		faqitemdata: {
 			type: Object,
 			required: true
+		},
+		item_index: {
+			type: Number
 		}
 	},
 
@@ -92,14 +127,28 @@ Vue.component( 'mx_faq_item', {
 					{{ the_date }}
 				</div>
 				<div class="mx-faq-item-subject">
-					{{ the_title }}
+					<a 
+						@click.prevent="toggleQuestion"
+						href="#"
+					>
+						<strong>{{ the_title }}</strong>
+						<span 
+							class="dashicons-plus dashicons"
+							:style="{display:[item_index === 0 ? 'none' : '']}"
+						></span>
+						<span
+							class="dashicons-minus dashicons dashicons"
+							:style="{display:[item_index !== 0 ? 'none' : '']}"
+						></span>
+					</a>
+					
 				</div>
 				<div class="mx-faq-item-user">
 					{{ the_user_name }}
 				</div>
 			</div>
 
-			<div class="mx-faq-item-body">
+			<div class="mx-faq-item-body" :style="{display:[item_index !== 0 ? 'none' : '']}">
 				<div class="mx-faq-item-question" v-html="the_question"></div>
 				<div class="mx-faq-item-answer" v-html="the_answer"></div>
 			</div>
@@ -107,6 +156,16 @@ Vue.component( 'mx_faq_item', {
 	`,
 	data() {
 		return {
+
+		}
+	},
+	methods: {
+		toggleQuestion() {
+
+			jQuery( '#' + this.the_id ).find( '.mx-faq-item-body' ).slideToggle( 'fast' );
+			jQuery( '#' + this.the_id ).find( '.dashicons-plus' ).toggle();
+			jQuery( '#' + this.the_id ).find( '.dashicons-minus' ).toggle();
+
 
 		}
 	},
@@ -197,7 +256,8 @@ Vue.component( 'mx_faq_list_items', {
 				<div v-else>
 
 					<mx_faq_item
-						v-for="item in get_items"
+						v-for="(item, index) in get_items"
+						:item_index="index"
 						:key="item.ID"				
 						:faqitemdata="item"
 					></mx_faq_item>
@@ -264,6 +324,10 @@ Vue.component( 'mx_faq_pagination',	{
 		getPage( page ) {
 
 			this.$emit( 'get-faq-page', page )
+
+			jQuery( 'body,html' ).animate({
+				scrollTop: jQuery( '.mx-faq-search' ).offset().top-130
+			}, 800);
 
 		}
 	},
@@ -355,13 +419,13 @@ Vue.component( 'mx_faq_form',
 						<small>${mxvjfepcdata_obj_front.texts.your_message_failed}</small>
 					</div>
 
-					<!--<div class="mx-recaptcha-wrap">
-						<vue-recaptcha sitekey="6Lfm3u8UAAAAAPmFbWF8HqhUi2Erc3p3luZoFpj4"
+					<div class="mx-recaptcha-wrap">
+						<vue-recaptcha sitekey="${mxvjfepcdata_obj_front.site_key}"
 							@verify="getRecaptchaVerify"
 							@expired="getRecaptchaExpired"
 							:class="{mx_empty_field: !re_captcha}"></vue-recaptcha>
-						<small>Проверка не пройдена</small>
-					</div>-->			
+						<small>${mxvjfepcdata_obj_front.texts.recaptcha_failed}</small>
+					</div>
 				
 					<div class="mx-send-message">
 						<img :src="load_img" alt="" class="mx-sending-progress" />
@@ -386,7 +450,7 @@ Vue.component( 'mx_faq_form',
 				load_img: mxvjfepcdata_obj_front.loading_img,
 				messageSending: false,
 				messageHasSent: false
-				//, re_captcha: null
+				, re_captcha: null
 			}
 		},
 		methods: {
@@ -395,13 +459,13 @@ Vue.component( 'mx_faq_form',
 				this.re_captcha = response
 
 			},
-			// getRecaptchaExpired() {
+			getRecaptchaExpired() {
 
-			// 	this.re_captcha = null
+				this.re_captcha = null
 
-			// 	console.log( 'expired' )
+				console.log( 'expired' )
 
-			// },
+			},
 			onSubmit() {
 
 				if( !this.messageHasSent ) {
@@ -414,7 +478,7 @@ Vue.component( 'mx_faq_form',
 						this.agrement &&
 						this.subject &&
 						this.message 
-						//&& this.re_captcha
+						&& this.re_captcha
 					) {
 
 						// post
@@ -451,9 +515,11 @@ Vue.component( 'mx_faq_form',
 			},
 			validateEmail( email ) {
 
-			    let patern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+			    // let patern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 				
-				return patern.test( String( email ).toLowerCase() )
+				return String( email ).toLowerCase().match(
+					/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+				);
 
 			},
 			sentDataReaction( response ) {
@@ -495,7 +561,7 @@ if( document.getElementById( 'mx_iile_faq' ) ) {
 			},
 			noItemsDisplay: '',
 			faqCurrentPage: 1,
-			faqPerPage: 15,
+			faqPerPage: 6,
 			faqCount: 0,
 			faqItems: [],
 			parseJSONerror: false,

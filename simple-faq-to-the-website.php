@@ -4,8 +4,9 @@ Plugin Name: Simple FAQ To The Website
 Plugin URI: https://github.com/ElenaIar/simple-faq-to-the-website
 Description: This plugin allows you to place the FAQ system to your website.
 Author: Olena Iaroshynska
-Version: 1.0
+Version: 2.0
 Author URI: https://github.com/ElenaIar
+Text Domain: simple-faq-to-the-website
 */
 
 // Exit if accessed directly
@@ -74,7 +75,7 @@ if ( ! defined( 'MXFFI_PLUGIN_ABS_PATH' ) ) {
 if ( ! defined( 'MXFFI_PLUGIN_VERSION' ) ) {
 
 	// version
-	define( 'MXFFI_PLUGIN_VERSION', '03.06.20' ); // Must be replaced before production on for example '1.0'
+	define( 'MXFFI_PLUGIN_VERSION', '17.05.25' ); // Must be replaced before production on for example '1.0'
 
 }
 
@@ -109,17 +110,4 @@ register_deactivation_hook( __FILE__, array( 'MXFFI_Basis_Plugin_Class', 'deacti
 if ( ! class_exists( 'MXFFIFAQForIile' ) ) {
 
 	require_once plugin_dir_path( __FILE__ ) . 'includes/final-class.php';
-
-	/*
-	* Translate plugin
-	*/
-	add_action( 'plugins_loaded', 'mxffi_translate' );
-
-	function mxffi_translate()
-	{
-
-		load_plugin_textdomain( 'mxffi-domain', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-
-	}
-
 }

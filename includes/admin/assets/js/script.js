@@ -1,5 +1,5 @@
 // form add email
-Vue.component( 'mx_agree_link_form', {
+Vue.component('mx_agree_link_form', {
 
 	props: {
 		agree_link: {
@@ -55,7 +55,7 @@ Vue.component( 'mx_agree_link_form', {
 	methods: {
 		saveAgreeLink() {
 
-			if(
+			if (
 				this.v_agree_link
 			) {
 
@@ -69,34 +69,34 @@ Vue.component( 'mx_agree_link_form', {
 
 				};
 
-				jQuery.post( mxvjfepcdata_obj_admin.ajax_url, data, function( response ) {
+				jQuery.post(mxvjfepcdata_obj_admin.ajax_url, data, function (response) {
 
-					if( response === 'saved' ) {
+					if (response === 'saved') {
 
 						_this.form_save_success = true
 
-						setTimeout( function() {
+						setTimeout(function () {
 
 							_this.form_save_success = null
 
-						}, 5000 )
+						}, 5000)
 
 					} else {
 
 						_this.form_failed = true
 
-						setTimeout( function() {
+						setTimeout(function () {
 
 							_this.form_failed = null
 
-						}, 5000 )
+						}, 5000)
 
 					}
 
-						
 
-				} );
-				
+
+				});
+
 
 			} else {
 				this.formInvalid = true
@@ -104,11 +104,11 @@ Vue.component( 'mx_agree_link_form', {
 
 		}
 	}
-	
-} )
+
+})
 
 // form add email
-Vue.component( 'mx_admin_email_form', {
+Vue.component('mx_admin_email_form', {
 
 	props: {
 		an_email: {
@@ -167,7 +167,7 @@ Vue.component( 'mx_admin_email_form', {
 	methods: {
 		saveEmail() {
 
-			if(
+			if (
 				this.admin_email
 			) {
 
@@ -181,50 +181,50 @@ Vue.component( 'mx_admin_email_form', {
 
 				};
 
-				jQuery.post( mxvjfepcdata_obj_admin.ajax_url, data, function( response ) {
+				jQuery.post(mxvjfepcdata_obj_admin.ajax_url, data, function (response) {
 
-					if( response === 'saved' ) {
+					if (response === 'saved') {
 
 						_this.form_save_success = true
 
-						setTimeout( function() {
+						setTimeout(function () {
 
 							_this.form_save_success = null
 
-						}, 5000 )
+						}, 5000)
 
 					} else {
 
 						_this.form_failed = true
 
-						setTimeout( function() {
+						setTimeout(function () {
 
 							_this.form_failed = null
 
-						}, 5000 )
+						}, 5000)
 
 					}
 
-				} );
+				});
 
 			} else {
 				this.formInvalid = true
 			}
 
 		},
-		validateEmail( email ) {
+		validateEmail(email) {
 
-		    let patern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-			
-			return patern.test( String( email ).toLowerCase() )
+			let patern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+			return patern.test(String(email).toLowerCase())
 
 		}
 	}
-	
-} );
+
+});
 
 // form add site key
-Vue.component( 'mx_recaptcha_site_key_form', {
+Vue.component('mx_recaptcha_site_key_form', {
 
 	props: {
 		site_key: {
@@ -280,7 +280,7 @@ Vue.component( 'mx_recaptcha_site_key_form', {
 	methods: {
 		saveSiteKey() {
 
-			if(
+			if (
 				this.v_site_key
 			) {
 
@@ -294,41 +294,113 @@ Vue.component( 'mx_recaptcha_site_key_form', {
 
 				};
 
-				jQuery.post( mxvjfepcdata_obj_admin.ajax_url, data, function( response ) {
+				jQuery.post(mxvjfepcdata_obj_admin.ajax_url, data, function (response) {
 
-					if( response === 'saved' ) {
+					if (response === 'saved') {
 
 						_this.form_save_success = true
 
-						setTimeout( function() {
+						setTimeout(function () {
 
 							_this.form_save_success = null
 
-						}, 5000 )
+						}, 5000)
 
 					} else {
 
 						_this.form_failed = true
 
-						setTimeout( function() {
+						setTimeout(function () {
 
 							_this.form_failed = null
 
-						}, 5000 )
+						}, 5000)
 
 					}
-				} );
+				});
 			} else {
 				this.formInvalid = true
 			}
 		}
 	}
-} );
+});
 
-if( document.getElementById( 'mx_admin_app' ) ) {
+// Enable SSR
+Vue.component('mx_enable_ssr_form', {
+	props: {
+		enable_ssr: {
+			type: String,
+			required: true
+		}
+	},
+	template: `
+		<form
+			@submit.prevent="saveSiteKey"
+			class="mx-iile-faq-form"
+			:class="{mx_invalid_form: formInvalid}"
+		>
 
-	var admin_app = new Vue( {
+			<div class="mx-form-saved" v-if="form_save_success">
+				${mxvjfepcdata_obj_admin.texts.form_saved}
+			</div>
+
+			<div class="mx-form-failed" v-if="form_failed">
+				${mxvjfepcdata_obj_admin.texts.form_failed}
+			</div>
+
+			<div>
+				<label>
+					<input 
+						type="checkbox"
+						v-model="v_enable_ssr"
+						true-value="1"
+						false-value="0"
+					/>
+					Enable SSR
+				</label>
+			</div>
+
+			<button type="submit">Save</button>
+		</form>
+	`,
+	data() {
+		return {
+			v_enable_ssr: this.enable_ssr === '1' ? '1' : '0',
+			formInvalid: false,
+			form_save_success: null,
+			form_failed: null
+		}
+	},
+	methods: {
+		saveSiteKey() {
+			this.formInvalid = false;
+
+			var _this = this;
+
+			var data = {
+				action: 'mx_changev_enable_ssr',
+				nonce: mxvjfepcdata_obj_admin.nonce,
+				enable_ssr: _this.v_enable_ssr
+			};
+
+			jQuery.post(mxvjfepcdata_obj_admin.ajax_url, data, function (response) {
+				if (response === 'saved') {
+					_this.form_save_success = true;
+					setTimeout(() => _this.form_save_success = null, 5000);
+				} else {
+					_this.form_failed = true;
+					setTimeout(() => _this.form_failed = null, 5000);
+				}
+			});
+		}
+	}
+});
+
+
+if (document.getElementById('mx_admin_app')) {
+
+	var admin_app = new Vue({
 		el: '#mx_admin_app'
-	} )
+	})
 
 }

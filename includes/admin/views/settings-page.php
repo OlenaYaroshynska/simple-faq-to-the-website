@@ -70,6 +70,26 @@
 			></mx_recaptcha_site_key_form>
 		</p>
 
+		<p>
+			<span><?php echo __( 'Enable SSR', 'simple-faq-to-the-website' ); ?></span><br>
+
+			<?php
+
+				$enable_ssr = get_option( '_mx_simple_faq_enable_ssr' );
+
+				if( !$enable_ssr ) {
+
+					$enable_ssr = '';
+
+				}
+
+			?>
+			
+			<mx_enable_ssr_form
+				:enable_ssr="'<?php echo $enable_ssr; ?>'"
+			></mx_enable_ssr_form>
+		</p>
+
 	</div>
 
 </div>

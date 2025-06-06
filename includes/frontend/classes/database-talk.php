@@ -122,13 +122,35 @@ class MXFFI_Database_Talk
 
 			if( wp_verify_nonce( $_POST['nonce'], 'mxvjfepcdata_nonce_request_front' ) ) {
 
-				$query = sanitize_text_field( $_POST['query'] ) ?? '';
+				$posts_id_results = self::mx_get_faq_items_body($_POST);
 
-				$current_page = sanitize_text_field( $_POST['current_page'] );				
+				$items_stuff = json_encode( $posts_id_results );
+
+				echo $items_stuff;
+
+			}
+
+			wp_die();
+
+		}
+
+			// 
+			public static function mx_get_faq_items_body($args)
+			{
+
+				if(!$args['query']) $args['query'] = '';
+
+				$query = sanitize_text_field( $args['query'] ) ?? '';
+
+				if(empty($args['current_page'])) return [];
+
+				$current_page = sanitize_text_field( $args['current_page'] );				
 
 				$current_page = intval( $current_page );
 
-				$faq_per_page = sanitize_text_field( $_POST['faq_per_page'] );
+				if(empty($args['faq_per_page'])) return [];
+
+				$faq_per_page = sanitize_text_field( $args['faq_per_page'] );
 
 				$faq_per_page = intval( $faq_per_page );
 
@@ -169,17 +191,10 @@ class MXFFI_Database_Talk
 
 					$posts_id_results[$key]->answer = $response;
 			
-				}					
+				}
 
-				$items_stuff = json_encode( $posts_id_results );
-
-				echo $items_stuff;
-
+				return $posts_id_results;
 			}
-
-			wp_die();
-
-		}
 
 		// get count of faq items
 		public static function mx_get_count_faq_items()
@@ -191,11 +206,25 @@ class MXFFI_Database_Talk
 
 				$query = sanitize_text_field( $_POST['query'] );
 
+				$faq_count = self::mx_get_count_faq_items_body($query);
+
+				echo $faq_count;
+
+			}
+
+			wp_die();
+
+		}
+
+			// 
+			public static function mx_get_count_faq_items_body($query)
+			{
+
 				global $wpdb;
 
 				$posts_table = $wpdb->prefix . 'posts';				
 
-				$faq_coung = $wpdb->get_var(
+				$faq_count = $wpdb->get_var(
 					"SELECT COUNT(ID)
 						FROM $posts_table
 						WHERE post_type = 'mxffi_iile_faq'
@@ -205,13 +234,8 @@ class MXFFI_Database_Talk
 							"
 				);
 
-				echo $faq_coung;
-
+				return $faq_count;
 			}
-
-			wp_die();
-
-		}
 
 		// get faq item by search
 		public static function mx_search_faq_items()

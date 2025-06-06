@@ -45,10 +45,12 @@
 }
 
 /*faq form*/
-#mx_iile_faq > div {
+#mx_iile_faq > div,
+.mx-faq-server-side-rendering > div {
     width: 100%;
 }
-#mx_iile_faq {
+#mx_iile_faq,
+.mx-faq-server-side-rendering {
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;
@@ -314,13 +316,17 @@ ul.mx-faq-pagination li a:hover {
     display: -o-flex;
     display: flex;
 }
-#mx_iile_faq .mx-faq-button {
+#mx_iile_faq .mx-faq-button,
+.mx-faq-server-side-rendering .mx-faq-button {
     text-align: center;
     width: 150px;
 }
 #mx_iile_faq .mx-faq-button,
 .mx-send-message button,
-#mx_iile_faq .mx-faq-button:visited {
+#mx_iile_faq .mx-faq-button:visited,
+.mx-faq-server-side-rendering .mx-faq-button,
+.mx-faq-server-side-rendering .mx-faq-button:visited,
+.mx-faq-server-side-rendering .mx-send-message button {
     font-size: 16px;
     line-height: 18px;
     padding: 15px 14px;
@@ -338,11 +344,15 @@ ul.mx-faq-pagination li a:hover {
 #mx_iile_faq .mx-faq-button:hover,
 #mx_iile_faq .mx-faq-button:focus,
 #mx_iile_faq .mx-faq-button:active,
+.mx-faq-server-side-rendering .mx-faq-button:hover,
+.mx-faq-server-side-rendering .mx-faq-button:focus,
+.mx-faq-server-side-rendering .mx-faq-button:active,
 .mx-send-message button:hover {
     background-color: #1e3a8a;
     color: #ffffff;
 }
-#mx_iile_faq .mx-faq-search input {
+#mx_iile_faq .mx-faq-search input,
+.mx-faq-server-side-rendering .mx-faq-search input {
     height: 50px;
     border-radius: 3px;
     font-size: 15px;
@@ -354,6 +364,13 @@ ul.mx-faq-pagination li a:hover {
 }
 .mx-faq-item-date {
     display: none;
+}
+
+/* SSR */
+.mx-faq-server-side-rendering .mx-faq-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
 }
 
 /*media*/

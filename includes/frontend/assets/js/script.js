@@ -1,8 +1,8 @@
 // recaptcha
-Vue.component( 'vue-recaptcha', VueRecaptcha )
+Vue.component('vue-recaptcha', VueRecaptcha)
 
 // search
-Vue.component( 'mx_faq_search', {
+Vue.component('mx_faq_search', {
 
 	props: {
 		pageloading: {
@@ -43,8 +43,8 @@ Vue.component( 'mx_faq_search', {
 	methods: {
 		scrollToAskQuestion() {
 
-			jQuery( 'body,html' ).animate({
-				scrollTop: jQuery( '#mx-iile-question-form' ).offset().top-130
+			jQuery('body,html').animate({
+				scrollTop: jQuery('#mx-iile-question-form').offset().top - 130
 			}, 800);
 
 		},
@@ -52,17 +52,17 @@ Vue.component( 'mx_faq_search', {
 
 			var _this = this
 
-			clearTimeout( _this.timeout )
+			clearTimeout(_this.timeout)
 
 			let search_query = this.search
 
-			if( search_query ) {
+			if (search_query) {
 
-				_this.timeout = setTimeout( function() {
+				_this.timeout = setTimeout(function () {
 
-					_this.$emit( 'mx-search-request', search_query )
+					_this.$emit('mx-search-request', search_query)
 
-				}, 500 )
+				}, 500)
 
 			}
 
@@ -71,44 +71,44 @@ Vue.component( 'mx_faq_search', {
 
 			var _this = this
 
-			clearTimeout( _this.timeout )
+			clearTimeout(_this.timeout)
 
 			let search_query = this.search
 
-			if( search_query ) {
+			if (search_query) {
 
-				if( search_query.length >= 3 ) {
+				if (search_query.length >= 3) {
 
-					_this.timeout = setTimeout( function() {
+					_this.timeout = setTimeout(function () {
 
-						_this.$emit( 'mx-search-request', search_query )
+						_this.$emit('mx-search-request', search_query)
 
-					}, 1000 )
+					}, 1000)
+
+				}
+
+			}
+
+			if (!search_query) {
+
+				if (search_query !== null) {
+
+					_this.timeout = setTimeout(function () {
+
+						_this.$emit('mx-search-request', search_query)
+
+					}, 1000)
 
 				}
 
 			}
 
-			if( !search_query ) {
-
-				if( search_query !== null ) {
-
-					_this.timeout = setTimeout( function() {
-
-						_this.$emit( 'mx-search-request', search_query )
-
-					}, 1000 )
-
-				}
-
-			}
-			
 		}
 	}
-} )
+})
 
 // item
-Vue.component( 'mx_faq_item', {
+Vue.component('mx_faq_item', {
 
 	props: {
 		faqitemdata: {
@@ -162,9 +162,9 @@ Vue.component( 'mx_faq_item', {
 	methods: {
 		toggleQuestion() {
 
-			jQuery( '#' + this.the_id ).find( '.mx-faq-item-body' ).slideToggle( 'fast' );
-			jQuery( '#' + this.the_id ).find( '.dashicons-plus' ).toggle();
-			jQuery( '#' + this.the_id ).find( '.dashicons-minus' ).toggle();
+			jQuery('#' + this.the_id).find('.mx-faq-item-body').slideToggle('fast');
+			jQuery('#' + this.the_id).find('.dashicons-plus').toggle();
+			jQuery('#' + this.the_id).find('.dashicons-minus').toggle();
 
 
 		}
@@ -190,14 +190,14 @@ Vue.component( 'mx_faq_item', {
 			var answer = this.faqitemdata.answer
 
 			answer = answer.replace(/\r?\n/g, '<br>')
-			
+
 			return answer
 		},
 		the_user_name() {
 			return this.faqitemdata.user_name
 		},
 		the_date() {
-			let date = new Date( this.faqitemdata.post_date )
+			let date = new Date(this.faqitemdata.post_date)
 
 			let day = date.getDate()
 
@@ -208,10 +208,10 @@ Vue.component( 'mx_faq_item', {
 			return day + '/' + month + '/' + year
 		},
 	}
-} )
+})
 
 // list of items
-Vue.component( 'mx_faq_list_items', {
+Vue.component('mx_faq_list_items', {
 
 	props: {
 		getfaqitems: {
@@ -275,13 +275,13 @@ Vue.component( 'mx_faq_list_items', {
 	computed: {
 		get_items() {
 			return this.getfaqitems
-		}		
+		}
 	}
 
-} )
+})
 
 // faq pagination
-Vue.component( 'mx_faq_pagination',	{
+Vue.component('mx_faq_pagination', {
 
 	props: {
 		faqcount: {
@@ -321,12 +321,12 @@ Vue.component( 'mx_faq_pagination',	{
 		</div>
 	`,
 	methods: {
-		getPage( page ) {
+		getPage(page) {
 
-			this.$emit( 'get-faq-page', page )
+			this.$emit('get-faq-page', page)
 
-			jQuery( 'body,html' ).animate({
-				scrollTop: jQuery( '.mx-faq-search' ).offset().top-130
+			jQuery('body,html').animate({
+				scrollTop: jQuery('.mx-faq-search').offset().top - 130
 			}, 800);
 
 		}
@@ -336,17 +336,17 @@ Vue.component( 'mx_faq_pagination',	{
 
 			let difference = this.faqcount / this.faqperpage
 
-			if( Number.isInteger( difference ) ) {
+			if (Number.isInteger(difference)) {
 				return difference
 			}
 
-			return parseInt( difference ) + 1
+			return parseInt(difference) + 1
 		}
 	}
-} )
+})
 
 // form
-Vue.component( 'mx_faq_form',
+Vue.component('mx_faq_form',
 	{
 		template: `
 			<div class="mx-iile-faq-form-wrap" id="mx-iile-question-form">
@@ -454,7 +454,7 @@ Vue.component( 'mx_faq_form',
 			}
 		},
 		methods: {
-			getRecaptchaVerify( response ) {
+			getRecaptchaVerify(response) {
 
 				this.re_captcha = response
 
@@ -463,21 +463,21 @@ Vue.component( 'mx_faq_form',
 
 				this.re_captcha = null
 
-				console.log( 'expired' )
+				console.log('expired')
 
 			},
 			onSubmit() {
 
-				if( !this.messageHasSent ) {
+				if (!this.messageHasSent) {
 
 					this.messageSending = true
 
-					if(
+					if (
 						this.user_name &&
 						this.user_email &&
 						this.agrement &&
 						this.subject &&
-						this.message 
+						this.message
 						&& this.re_captcha
 					) {
 
@@ -489,17 +489,17 @@ Vue.component( 'mx_faq_form',
 							action: 'mx_faq_iile',
 							nonce: mxvjfepcdata_obj_front.nonce,
 
-							user_name: 	_this.user_name,
+							user_name: _this.user_name,
 							user_email: _this.user_email,
-							subject: 	_this.subject,
-							message: 	_this.message
+							subject: _this.subject,
+							message: _this.message
 						};
 
-						jQuery.post( mxvjfepcdata_obj_front.ajax_url, data, function( response ) {
+						jQuery.post(mxvjfepcdata_obj_front.ajax_url, data, function (response) {
 
-							_this.sentDataReaction( response );							
+							_this.sentDataReaction(response);
 
-						} );
+						});
 
 					} else {
 
@@ -508,23 +508,23 @@ Vue.component( 'mx_faq_form',
 						this.messageSending = false
 
 					}
-					this.validateEmail( this.user_email )
+					this.validateEmail(this.user_email)
 
-				}				
+				}
 
 			},
-			validateEmail( email ) {
+			validateEmail(email) {
 
-			    // let patern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-				
-				return String( email ).toLowerCase().match(
+				// let patern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+				return String(email).toLowerCase().match(
 					/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 				);
 
 			},
-			sentDataReaction( response ) {
+			sentDataReaction(response) {
 
-				if( response === 'integer' ) {
+				if (response === 'integer') {
 
 					this.user_name = null
 					this.user_email = null
@@ -541,8 +541,8 @@ Vue.component( 'mx_faq_form',
 				} else {
 
 					this.messageSending = false
-					
-				}				
+
+				}
 
 			}
 
@@ -550,9 +550,9 @@ Vue.component( 'mx_faq_form',
 	}
 )
 
-if( document.getElementById( 'mx_iile_faq' ) ) {
+if (document.getElementById('mx_iile_faq')) {
 
-	var app = new Vue( {
+	var app = new Vue({
 		el: '#mx_iile_faq',
 		data: {
 			noItemsMessages: {
@@ -569,29 +569,29 @@ if( document.getElementById( 'mx_iile_faq' ) ) {
 			loadImg: mxvjfepcdata_obj_front.loading_img,
 			query: ''
 		},
-		methods: {			
-			searchQuestion( query ) {
+		methods: {
+			searchQuestion(query) {
 
 				this.noItemsDisplay = this.noItemsMessages.noSearchItems
 
 				// clear data ...
-					this.faqItems = []
+				this.faqItems = []
 
-					this.pageLoading = true
+				this.pageLoading = true
 
-					let page = 1
+				let page = 1
 
-					this.faqCurrentPage = page
+				this.faqCurrentPage = page
 
-					this.faqCurrentPage = page
+				this.faqCurrentPage = page
 
-					history.pushState( { faqPage: page },"",'#page-' + page )
+				history.pushState({ faqPage: page }, "", '#page-' + page)
 				// ... clear data
 
 				// set query
 				let _query = ''
 
-				if( query !== null ) {
+				if (query !== null) {
 
 					_query = query
 
@@ -608,17 +608,17 @@ if( document.getElementById( 'mx_iile_faq' ) ) {
 					current_page: _this.faqCurrentPage,
 					faq_per_page: _this.faqPerPage,
 					query: query
-				};			
+				};
 
-				jQuery.post( mxvjfepcdata_obj_front.ajax_url, data, function( response ) {
+				jQuery.post(mxvjfepcdata_obj_front.ajax_url, data, function (response) {
 
-					if( _this.isJSON( response ) ) {
+					if (_this.isJSON(response)) {
 
-						_this.get_count_faq_items( query )
+						_this.get_count_faq_items(query)
 
-						_this.faqItems = JSON.parse( response );
+						_this.faqItems = JSON.parse(response);
 
-						_this.pageLoading = false						
+						_this.pageLoading = false
 
 					} else {
 
@@ -626,14 +626,14 @@ if( document.getElementById( 'mx_iile_faq' ) ) {
 
 					}
 
-				} );
+				});
 
 			},
-			changeFaqPage( page ) {
+			changeFaqPage(page) {
 
 				this.faqCurrentPage = page
 
-				history.pushState( { faqPage: page },"",'#page-' + page )
+				history.pushState({ faqPage: page }, "", '#page-' + page)
 
 				this.get_faq_items()
 			},
@@ -641,30 +641,30 @@ if( document.getElementById( 'mx_iile_faq' ) ) {
 
 				let curretn_page = window.location.href
 
-				if( curretn_page.indexOf( '#page-' ) >= 0 ) {
+				if (curretn_page.indexOf('#page-') >= 0) {
 
-					let matches = curretn_page.match( /#page-(\d+)/ )
+					let matches = curretn_page.match(/#page-(\d+)/)
 
-					let get_page = parseInt( matches[1] );
+					let get_page = parseInt(matches[1]);
 
-					if( Number.isInteger( get_page ) ) {
+					if (Number.isInteger(get_page)) {
 
 						this.faqCurrentPage = get_page
 
-					}		
+					}
 
 				} else {
 
-					history.pushState( { faqPage:'1' },"",'#page-1' )
+					history.pushState({ faqPage: '1' }, "", '#page-1')
 
-				}				
+				}
 
 			},
-			get_count_faq_items( query ) {
+			get_count_faq_items(query) {
 
 				let _query = ''
 
-				if( query !== null ) _query = query
+				if (query !== null) _query = query
 
 				var _this = this
 
@@ -673,17 +673,17 @@ if( document.getElementById( 'mx_iile_faq' ) ) {
 					action: 'mx_get_count_faq_items',
 					nonce: mxvjfepcdata_obj_front.nonce,
 					query: _query
-				};				
+				};
 
-				jQuery.post( mxvjfepcdata_obj_front.ajax_url, data, function( response ) {
+				jQuery.post(mxvjfepcdata_obj_front.ajax_url, data, function (response) {
 
-					let count = parseInt( response )
+					let count = parseInt(response)
 
-					if( Number.isInteger( count ) )	{
+					if (Number.isInteger(count)) {
 						_this.faqCount = count
 					}
 
-				} );
+				});
 
 			},
 			get_faq_items() {
@@ -699,13 +699,13 @@ if( document.getElementById( 'mx_iile_faq' ) ) {
 					current_page: _this.faqCurrentPage,
 					faq_per_page: _this.faqPerPage,
 					query: _this.query
-				};			
+				};
 
-				jQuery.post( mxvjfepcdata_obj_front.ajax_url, data, function( response ) {
+				jQuery.post(mxvjfepcdata_obj_front.ajax_url, data, function (response) {
 
-					if( _this.isJSON( response ) ) {
+					if (_this.isJSON(response)) {
 
-						var result = JSON.parse( response );						
+						var result = JSON.parse(response);
 
 						_this.faqItems = result;
 
@@ -717,16 +717,16 @@ if( document.getElementById( 'mx_iile_faq' ) ) {
 
 					}
 
-				} );
+				});
 
 			},
-			isJSON( str ) {
+			isJSON(str) {
 				try {
-			        JSON.parse(str);
-			    } catch (e) {
-			        return false;
-			    }
-			    return true;
+					JSON.parse(str);
+				} catch (e) {
+					return false;
+				}
+				return true;
 			}
 		},
 		beforeMount() {
@@ -735,11 +735,27 @@ if( document.getElementById( 'mx_iile_faq' ) ) {
 			this.get_current_page()
 
 			// get count of faq items
-			this.get_count_faq_items( null )
+			this.get_count_faq_items(null)
 
 			// get faq items
 			this.get_faq_items()
 		}
-	} )
+	})
 
 }
+
+// 
+jQuery(document).ready(function ($) {
+	$('.mx-faq-item-header').on('click', function (e) {
+		e.preventDefault();
+
+		const $item = $(this).closest('.mx-faq-item');
+		const $body = $item.find('.mx-faq-item-body');
+		const $plus = $item.find('.dashicons-plus');
+		const $minus = $item.find('.dashicons-minus');
+
+		$body.stop(true, true).slideToggle(200);
+		$plus.toggle();
+		$minus.toggle();
+	});
+});
